@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SGSDC - Student Login</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Header */
+        .college-header {
+            background: #0a1628;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-bottom: 3px solid #c9a227;
+        }
+        .college-header .icon { font-size: 50px; }
+        .college-header h1 {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 8px 0 4px;
+            color: #c9a227;
+            letter-spacing: 1px;
+        }
+        .college-header p {
+            font-size: 13px;
+            color: #aac4e0;
+        }
+
+        /* Login Box */
+        .login-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+        }
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 380px;
+        }
+        .login-box h2 {
+            text-align: center;
+            color: #0a1628;
+            margin-bottom: 6px;
+            font-size: 20px;
+        }
+        .login-box p {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #ddd;
+            border-radius: 7px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #1a3a5c;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: #0a1628;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: background 0.3s;
+        }
+        .btn-login:hover { background: #1a3a5c; }
+        .error {
+            background: #ffe0e0;
+            color: #c0392b;
+            padding: 10px;
+            border-radius: 7px;
+            text-align: center;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a1628;
+            color: #aac4e0;
+            text-align: center;
+            padding: 14px;
+            font-size: 12px;
+            border-top: 2px solid #c9a227;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="college-header">
+        <div class="icon">🎓</div>
+        <h1>Shree Guru Sudhindra Degree College</h1>
+        <p>Bhatkal, Karnataka &nbsp;|&nbsp; Affiliated to Karnatak University, Dharwad</p>
+    </div>
+
+    <div class="login-wrapper">
+        <div class="login-box">
+            <h2>Student Portal</h2>
+            <p>Login with your student credentials</p>
+
+            {% if error %}
+                <div class="error">⚠️ {{ error }}</div>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Enter your username" required />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Enter your password" required />
+                </div>
+                <button type="submit" class="btn-login">🔐 Login to Portal</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 Shree Guru Sudhindra Degree College, Bhatkal. All rights reserved.
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SGSDC - Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Navbar */
+        .navbar {
+            background: #0a1628;
+            color: white;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #c9a227;
+            min-height: 65px;
+        }
+        .navbar-left { display: flex; align-items: center; gap: 12px; }
+        .navbar-left .icon { font-size: 28px; }
+        .navbar-left .college-name { font-size: 15px; font-weight: bold; color: #c9a227; }
+        .navbar-left .college-sub { font-size: 11px; color: #aac4e0; }
+        .navbar-right { display: flex; align-items: center; gap: 20px; }
+        .navbar-right span { font-size: 13px; color: #aac4e0; }
+        .navbar-right a {
+            color: white;
+            text-decoration: none;
+            background: #c9a227;
+            padding: 7px 16px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .navbar-right a:hover { background: #b8911f; }
+
+        /* Nav Links */
+        .nav-links {
+            background: #1a3a5c;
+            display: flex;
+            gap: 0;
+            padding: 0 30px;
+        }
+        .nav-links a {
+            color: #aac4e0;
+            text-decoration: none;
+            padding: 12px 18px;
+            font-size: 13px;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+        .nav-links a:hover {
+            color: white;
+            border-bottom: 3px solid #c9a227;
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Main Content */
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; flex: 1; width: 100%; }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, #0a1628, #1a3a5c);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 5px solid #c9a227;
+        }
+        .welcome-banner h2 { font-size: 22px; margin-bottom: 5px; }
+        .welcome-banner p { font-size: 13px; color: #aac4e0; }
+
+        /* Student Info Card */
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        .card h3 {
+            color: #0a1628;
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f4f8;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .info-item { display: flex; flex-direction: column; }
+        .info-item .label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+        .info-item .value { font-size: 15px; color: #0a1628; font-weight: 600; margin-top: 3px; }
+
+        /* Menu Cards */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .menu-card {
+            background: white;
+            padding: 25px 15px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: #0a1628;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        .menu-card:hover {
+            transform: translateY(-4px);
+            border-bottom: 3px solid #c9a227;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        .menu-card .icon { font-size: 32px; margin-bottom: 10px; }
+        .menu-card .label { font-size: 13px; font-weight: 600; color: #333; }
+
+        /* Announcements */
+        .announcement-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f4f8;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .announcement-item:last-child { border-bottom: none; }
+        .announcement-item .title { font-size: 14px; font-weight: 600; color: #0a1628; }
+        .announcement-item .date { font-size: 12px; color: #888; white-space: nowrap; margin-left: 10px; }
+
+        /* Footer */
+        footer {
+            background: #0a1628;
+            color: #aac4e0;
+            text-align: center;
+            padding: 14px;
+            font-size: 12px;
+            border-top: 2px solid #c9a227;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navbar -->
+    <div class="navbar">
+        <div class="navbar-left">
+            <div class="icon">🎓</div>
+            <div>
+                <div class="college-name">Shree Guru Sudhindra Degree College</div>
+                <div class="college-sub">Bhatkal, Karnataka</div>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <span>👤 {{ student.name }}</span>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+
+    <!-- Nav Links -->
+    <div class="nav-links">
+        <a href="{% url 'dashboard' %}">🏠 Dashboard</a>
+        <a href="{% url 'announcements' %}">📢 Announcements</a>
+        <a href="{% url 'attendance' %}">📋 Attendance</a>
+        <a href="{% url 'marks' %}">📝 Marks</a>
+        <a href="{% url 'timetable' %}">🕐 Timetable</a>
+    </div>
+
+    <div class="container">
+
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <h2>Welcome back, {{ student.name }}! 👋</h2>
+            <p>{{ student.department }} &nbsp;|&nbsp; Semester {{ student.semester }} &nbsp;|&nbsp; USN: {{ student.usn }}</p>
+        </div>
+
+        <!-- Student Info -->
+        <div class="card">
+            <h3>🎓 Student Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="label">Full Name</span>
+                    <span class="value">{{ student.name }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">USN</span>
+                    <span class="value">{{ student.usn }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Department</span>
+                    <span class="value">{{ student.department }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Semester</span>
+                    <span class="value">Semester {{ student.semester }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Cards -->
+        <div class="menu-grid">
+            <a href="{% url 'announcements' %}" class="menu-card">
+                <div class="icon">📢</div>
+                <div class="label">Announcements</div>
+            </a>
+            <a href="{% url 'attendance' %}" class="menu-card">
+                <div class="icon">📋</div>
+                <div class="label">Attendance</div>
+            </a>
+            <a href="{% url 'marks' %}" class="menu-card">
+                <div class="icon">📝</div>
+                <div class="label">Marks</div>
+            </a>
+            <a href="{% url 'timetable' %}" class="menu-card">
+                <div class="icon">🕐</div>
+                <div class="label">Timetable</div>
+            </a>
+        </div>
+
+        <!-- Recent Announcements -->
+        <div class="card">
+            <h3>📢 Recent Announcements</h3>
+            {% for a in announcements %}
+                <div class="announcement-item">
+                    <span class="title">{{ a.title }}</span>
+                    <span class="date">📅 {{ a.date }}</span>
+                </div>
+            {% empty %}
+                <p style="color:#888; font-size:14px;">No announcements yet.</p>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2024 Shree Guru Sudhindra Degree College, Bhatkal. All rights reserved.
+    </footer>
+
+</body>
+</html>

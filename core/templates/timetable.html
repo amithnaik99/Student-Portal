@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SGSDC - Timetable</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; min-height: 100vh; display: flex; flex-direction: column; }
+        .navbar { background: #0a1628; color: white; padding: 0 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #c9a227; min-height: 65px; }
+        .navbar-left { display: flex; align-items: center; gap: 12px; }
+        .navbar-left .icon { font-size: 28px; }
+        .navbar-left .college-name { font-size: 15px; font-weight: bold; color: #c9a227; }
+        .navbar-left .college-sub { font-size: 11px; color: #aac4e0; }
+        .navbar-right a { color: white; text-decoration: none; background: #c9a227; padding: 7px 16px; border-radius: 5px; font-size: 13px; font-weight: bold; }
+        .navbar-right a:hover { background: #b8911f; }
+        .nav-links { background: #1a3a5c; display: flex; padding: 0 30px; }
+        .nav-links a { color: #aac4e0; text-decoration: none; padding: 12px 18px; font-size: 13px; transition: all 0.2s; border-bottom: 3px solid transparent; }
+        .nav-links a:hover, .nav-links a.active { color: white; border-bottom: 3px solid #c9a227; background: rgba(255,255,255,0.05); }
+        .container { max-width: 800px; margin: 30px auto; padding: 0 20px; flex: 1; width: 100%; }
+        .page-title { font-size: 22px; color: #0a1628; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #c9a227; display: inline-block; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #0a1628; color: white; }
+        th { padding: 14px 18px; text-align: left; font-size: 13px; letter-spacing: 0.5px; }
+        td { padding: 14px 18px; border-bottom: 1px solid #f0f4f8; font-size: 14px; color: #333; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #f8fafc; }
+        .day-badge { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; background: #e8eaf6; color: #0a1628; }
+        footer { background: #0a1628; color: #aac4e0; text-align: center; padding: 14px; font-size: 12px; border-top: 2px solid #c9a227; margin-top: auto; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-left">
+            <div class="icon">🎓</div>
+            <div>
+                <div class="college-name">Shree Guru Sudhindra Degree College</div>
+                <div class="college-sub">Bhatkal, Karnataka</div>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+    <div class="nav-links">
+        <a href="{% url 'dashboard' %}">🏠 Dashboard</a>
+        <a href="{% url 'announcements' %}">📢 Announcements</a>
+        <a href="{% url 'attendance' %}">📋 Attendance</a>
+        <a href="{% url 'marks' %}">📝 Marks</a>
+        <a href="{% url 'timetable' %}" class="active">🕐 Timetable</a>
+    </div>
+    <div class="container">
+        <div class="page-title">🕐 Class Timetable</div>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Subject</th>
+                        <th>Time Slot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in timetable_data %}
+                    <tr>
+                        <td><span class="day-badge">{{ t.day }}</span></td>
+                        <td><strong>{{ t.subject }}</strong></td>
+                        <td>🕐 {{ t.time }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3" style="text-align:center; color:#888;">No timetable data found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer>&copy; 2024 Shree Guru Sudhindra Degree College, Bhatkal. All rights reserved.</footer>
+</body>
+</html>
